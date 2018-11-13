@@ -1,0 +1,39 @@
+---
+# Written by CHROMICO for GC1 2018
+
+# This playbook will set up a raspberry pi to work with a DHT11 sensor.
+# First the playbook will clone the Adafruit DHT11 library from their
+# github repo and then an already written python script on the raspberry pi will be excuted 
+# after the repo has been downloaded.The readings from the sensor will
+# then be copied to a text file that will be stored on the local 
+
+  
+
+# NOTE: The DHT11 sensor is not suitable for any industrial, medical and
+# military use due to the fact it does not record accurate and precise
+# readings but it can be used for hobby use.
+
+# To change or add the IP of the raspberry pi you will need to edit the
+# anisble hosts file. 
+
+# To SSH in the raspberry pi with no password then you will need to save the public
+# and private key. Please check the README file for more info.
+
+
+- name: Setting up the raspberry to work with a DHT11 sensor
+  hosts: raspberrypi
+  become: true
+
+  tasks:
+  - name: Cloning the DHT11 repo from Adafruit
+    git:
+      repo: 'https://github.com/adafruit/DHT-sensor-library.git'
+      clone: yes
+      dest: /home/pi              # Location of the repo
+      
+  - name: Running the python script     # The script is timed to run for only 60 seconds
+    shell: python /home/pi/dht11.py
+    register: x
+    
+  - name: Recording the data in a file
+    local_action: lineinfile line="{{ x.stdout }}" insertafter=EOF dest=/home/tecknologg/Desktop/ls.txt   #saves the output of the script in a text file but do know that the text file must be created first or else you might get an error.
