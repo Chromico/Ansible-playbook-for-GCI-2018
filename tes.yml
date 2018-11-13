@@ -29,7 +29,7 @@
     git:
       repo: 'https://github.com/adafruit/DHT-sensor-library.git'
       clone: yes
-      dest: /home/pi              # Location of the repo
+      dest: /home/pi/test              # Location of the repo
       
   - name: Running the python script     # The script is timed to run for only 60 seconds
     shell: python /home/pi/dht11.py
