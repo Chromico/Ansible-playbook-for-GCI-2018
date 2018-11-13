@@ -19,7 +19,9 @@ get root access to everything.
 
    ssh-copy-id root@(raspberry pi ip address)
    
-8. Then run the playbook with this command:
+8. Copy the dht11.py script to the raspberry pi
+   
+9. Then run the playbook with this command:
 
   ansible-playbook (name of the file).yml
   
